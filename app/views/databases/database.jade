@@ -3,7 +3,7 @@ database.database
     a(href='/databases/'+database._id, title=database.title) #{database.title}
   p= database.body
 
-  .meta
+  // .meta
     span.muted= formatDate(database.createdAt)
 
     - if (database.user)
