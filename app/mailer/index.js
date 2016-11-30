@@ -37,21 +37,21 @@ module.exports = {
    */
 
   comment: function (options, cb) {
-    const article = options.article;
-    const author = article.user;
+    const database = options.database;
+    const author = database.user;
     const user = options.currentUser;
     const notifier = new Notifier(config.notifier);
 
     const obj = {
       to: author.email,
       from: 'your@product.com',
-      subject: user.name + ' added a comment on your article ' + article.title,
+      subject: user.name + ' added a comment on your database ' + database.title,
       alert: user.name + ' says: "' + options.comment,
       locals: {
         to: author.name,
         from: user.name,
         body: options.comment,
-        article: article.name
+        database: database.name
       }
     };
 

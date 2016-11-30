@@ -1,0 +1,23 @@
+database.database
+  h3
+    a(href='/databases/'+database._id, title=database.title) #{database.title}
+  p= database.body
+
+  .meta
+    span.muted= formatDate(database.createdAt)
+
+    - if (database.user)
+      | &nbsp; - &nbsp;
+      span Author &nbsp;
+
+      - var name = database.user.name ? database.user.name : database.user.username
+
+      a(href="/users/"+database.user._id)= name
+
+    - if (database.tags)
+      | &nbsp; - &nbsp;
+      span Tags &nbsp;
+      - each tag in database.tags.split(',')
+        i.muted.fa.fa-tag &nbsp;
+        a.tag(href="/tags/"+tag)= tag
+        | &nbsp;&nbsp;

@@ -17,10 +17,10 @@ const getTags = tags => tags.join(',');
 const setTags = tags => tags.split(',');
 
 /**
- * Article Schema
+ * Database Schema
  */
 
-const ArticleSchema = new Schema({
+const DatabaseSchema = new Schema({
   title: { type : String, default : '', trim : true },
   body: { type : String, default : '', trim : true },
   user: { type : Schema.ObjectId, ref : 'User' },
@@ -41,21 +41,21 @@ const ArticleSchema = new Schema({
  * Validations
  */
 
-ArticleSchema.path('title').required(true, 'Article title cannot be blank');
-ArticleSchema.path('body').required(true, 'Article body cannot be blank');
+DatabaseSchema.path('title').required(true, 'Database title cannot be blank');
+DatabaseSchema.path('body').required(true, 'Database body cannot be blank');
 
 /**
  * Pre-remove hook
  */
 
-ArticleSchema.pre('remove', function (next) {
+DatabaseSchema.pre('remove', function (next) {
   // const imager = new Imager(imagerConfig, 'S3');
   // const files = this.image.files;
 
   // if there are files associated with the item, remove from the cloud too
   // imager.remove(files, function (err) {
   //   if (err) return next(err);
-  // }, 'article');
+  // }, 'database');
 
   next();
 });
@@ -64,10 +64,10 @@ ArticleSchema.pre('remove', function (next) {
  * Methods
  */
 
-ArticleSchema.methods = {
+DatabaseSchema.methods = {
 
   /**
-   * Save article and upload image
+   * Save database and upload image
    *
    * @param {Object} images
    * @api private
@@ -88,7 +88,7 @@ ArticleSchema.methods = {
         self.image = { cdnUri : cdnUri, files : files };
       }
       self.save(cb);
-    }, 'article');
+    }, 'database');
     */
   },
 
@@ -109,7 +109,7 @@ ArticleSchema.methods = {
     if (!this.user.email) this.user.email = 'email@product.com';
 
     notify.comment({
-      article: this,
+      database: this,
       currentUser: user,
       comment: comment.body
     });
@@ -139,10 +139,10 @@ ArticleSchema.methods = {
  * Statics
  */
 
-ArticleSchema.statics = {
+DatabaseSchema.statics = {
 
   /**
-   * Find article by id
+   * Find database by id
    *
    * @param {ObjectId} id
    * @api private
@@ -156,7 +156,7 @@ ArticleSchema.statics = {
   },
 
   /**
-   * List articles
+   * List databases
    *
    * @param {Object} options
    * @api private
@@ -175,4 +175,4 @@ ArticleSchema.statics = {
   }
 };
 
-mongoose.model('Article', ArticleSchema);
+mongoose.model('Database', DatabaseSchema);

@@ -12,7 +12,7 @@ const { respondOrRedirect } = require('../utils');
  */
 
 exports.load = function (req, res, next, id) {
-  req.comment = req.article.comments
+  req.comment = req.database.comments
     .find(comment => comment.id === id);
     
   if (!req.comment) return next(new Error('Comment not found'));
@@ -24,9 +24,9 @@ exports.load = function (req, res, next, id) {
  */
 
 exports.create = async(function* (req, res) {
-  const article = req.article;
-  yield article.addComment(req.user, req.body);
-  respondOrRedirect({ res }, `/articles/${article._id}`, article.comments[0]);
+  const database = req.database;
+  yield database.addComment(req.user, req.body);
+  respondOrRedirect({ res }, `/databases/${database._id}`, database.comments[0]);
 });
 
 /**
@@ -34,10 +34,10 @@ exports.create = async(function* (req, res) {
  */
 
 exports.destroy = async(function* (req, res) {
-  yield req.article.removeComment(req.params.commentId);
+  yield req.database.removeComment(req.params.commentId);
   req.flash('info', 'Removed comment');
-  res.redirect('/articles/' + req.article.id);
-  respondOrRedirect({ req, res }, `/articles/${req.article.id}`, {}, {
+  res.redirect('/databases/' + req.database.id);
+  respondOrRedirect({ req, res }, `/databases/${req.database.id}`, {}, {
     type: 'info',
     text: 'Removed comment'
   });

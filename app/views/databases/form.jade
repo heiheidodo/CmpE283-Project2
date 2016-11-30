@@ -4,8 +4,8 @@ block main
   h1= title
 
 block content
-  - var action = '/articles'
-  - action += article.isNew? '' : '/' + article.id
+  - var action = '/databases'
+  - action += database.isNew? '' : '/' + database.id
 
   .row
     .col-md-8
@@ -13,13 +13,13 @@ block content
 
         input(type="hidden", name="_csrf", value="#{csrf_token}")
 
-        - if (!article.isNew)
+        - if (!database.isNew)
           input(type="hidden", name="_method", value="PUT")
 
         .form-group
           label.col-sm-2.control-label(for='title') Title
           .col-sm-10
-            input.form-control#title(type='text', name="title", value=article.title, placeholder='Enter the title')
+            input.form-control#title(type='text', name="title", value=database.title, placeholder='Enter the title')
 
         .form-group
           label.col-sm-2.control-label(for='file') Image
@@ -29,19 +29,19 @@ block content
         .form-group
           label.col-sm-2.control-label(for='desc') Body
           .col-sm-10
-            textarea.form-control#desc(rows="5", name="body", placeholder='Enter the article description')=article.body
+            textarea.form-control#desc(rows="5", name="body", placeholder='Enter the database description')=database.body
 
         .form-group
           label.col-sm-2.control-label(for='tags') Tags
           .col-sm-10
-            input.form-control#tags(type='text', name="tags", value=article.tags, placeholder='Enter the tags')
+            input.form-control#tags(type='text', name="tags", value=database.tags, placeholder='Enter the tags')
 
         .form-group
           .col-sm-offset-2.col-sm-10
             button.btn.btn-primary(type='submit') Save
             | &nbsp;
-            a.btn(href='/articles', title="cancel") Cancel
+            a.btn(href='/databases', title="cancel") Cancel
 
     .col-md-4
-      - if (!article.isNew && article.image && article.image.files && article.image.files.length)
-        img(src=article.image.cdnUri + "/mini_" + article.image.files[0])
+      - if (!database.isNew && database.image && database.image.files && database.image.files.length)
+        img(src=database.image.cdnUri + "/mini_" + database.image.files[0])

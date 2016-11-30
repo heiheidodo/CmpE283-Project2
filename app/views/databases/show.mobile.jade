@@ -1,0 +1,41 @@
+extends ../layouts/mobile
+
+
+block main
+  h1= database.title
+
+block content
+  .row
+    .span9
+      p=database.body
+      .meta.muted
+        - var name = database.user.name ? database.user.name : database.user.username
+        p Author -&nbsp;
+          a(href="/users/"+database.user._id)= name
+        p.muted= formatDate(database.createdAt, "%b %d, %Y at %I:%M %p")
+        - if (database.tags)
+          .tags
+            - each tag in database.tags.split(',')
+              a.tag(href="/tags/"+tag)
+                i.icon-tags
+                |  #{tag}
+              | &nbsp;&nbsp;
+    .span3
+      - if (!database.isNew && database.image && database.image.files && database.image.files.length)
+        img(src=database.image.cdnUri + '/mini_' + database.image.files[0])
+
+  p
+    br
+    form.center.form-inline.confirm(action="/databases/"+database.id, method="post")
+      input(type='hidden', name='_csrf', value="#{csrf_token}")
+      a.btn(href='/databases/'+database._id+'/edit', title="edit") Edit
+      | &nbsp;&nbsp;
+      input(type="hidden", name="_method", value="DELETE")
+      button.btn.btn-danger(type="submit") delete
+
+  p
+    br
+    h3 Comments
+    - each comment in database.comments
+      include ../comments/comment
+    include ../comments/form

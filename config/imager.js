@@ -5,7 +5,7 @@
 
 module.exports = {
   variants: {
-    article: {
+    database: {
       resize: {
         detail: 'x440'
       },

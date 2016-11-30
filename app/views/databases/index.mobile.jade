@@ -1,0 +1,31 @@
+extends ../layouts/mobile
+
+block main
+  h1= title
+
+block content
+  - each database in databases
+    .database
+      h3
+        a(href='/databases/'+database._id, title=database.title) #{database.title}
+      p= database.body
+
+      .meta.muted
+        span= formatDate(database.createdAt)
+        | &nbsp; - &nbsp;
+        span Author &nbsp;
+
+        - var name = database.user.name ? database.user.name : database.user.username
+
+        a(href="/users/"+database.user._id)= name
+        &nbsp; - &nbsp;
+        - if (database.tags)
+          - each tag in database.tags.split(',')
+            | &nbsp;
+            a.tag(href="/tags/"+tag)
+              i.icon-tags
+              |  #{tag}
+
+  - if (pages > 1)
+    ul.pagination
+      != createPagination(pages, page)

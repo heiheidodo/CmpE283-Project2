@@ -7,7 +7,7 @@
 
 # Nodejs Express Mongoose Demo
 
-This is a demo node.js application illustrating various features used in everyday web development, with a fine touch of best practices. The demo app is a blog application where users (signing up using facebook, twitter, github and simple registrations) can create an article, delete an article and add comments on the article.
+This is a demo node.js application illustrating various features used in everyday web development, with a fine touch of best practices. The demo app is a blog application where users (signing up using facebook, twitter, github and simple registrations) can create an database, delete an database and add comments on the database.
 
 ## Boilerplate
 
@@ -35,7 +35,7 @@ $ npm install
 cp .env.example .env
 ```
 
-and replace the values there. In `production` env, it is not safe to keep the ids and secrets in a file, so you need to set it up via commandline. If you are using heroku checkout how environment variables are set [here](https://devcenter.heroku.com/articles/config-vars).
+and replace the values there. In `production` env, it is not safe to keep the ids and secrets in a file, so you need to set it up via commandline. If you are using heroku checkout how environment variables are set [here](https://devcenter.heroku.com/databases/config-vars).
 
 If you want to use image uploads, don't forget to set these env variables for
 imager config.

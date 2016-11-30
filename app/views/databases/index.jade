@@ -4,13 +4,13 @@ block main
   h1= title
 
 block content
-  - if (articles.length)
-    - each article in articles
-      include article
+  - if (databases.length)
+    - each database in databases
+      include database
 
     - if (pages > 1)
       ul.pagination
         != createPagination(pages, page)
   - else
-    h4.muted No articles.&nbsp;
-      a(href="/articles/new") create one
+    h4.muted No databases.&nbsp;
+      a(href="/databases/new") create one

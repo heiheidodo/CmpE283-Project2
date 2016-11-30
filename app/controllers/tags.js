@@ -7,7 +7,7 @@
 const mongoose = require('mongoose');
 const { wrap: async } = require('co');
 const { respond } = require('../utils');
-const Article = mongoose.model('Article');
+const Database = mongoose.model('Database');
 
 /**
  * List items tagged with a tag
@@ -23,12 +23,12 @@ exports.index = async(function* (req, res) {
     criteria: criteria
   };
 
-  const articles = yield Article.list(options);
-  const count = yield Article.count(criteria);
+  const databases = yield Database.list(options);
+  const count = yield Database.count(criteria);
 
-  respond(res, 'articles/index', {
-    title: 'Articles tagged ' + req.params.tag,
-    articles: articles,
+  respond(res, 'databases/index', {
+    title: 'Databases tagged ' + req.params.tag,
+    databases: databases,
     page: page + 1,
     pages: Math.ceil(count / limit)
   });
