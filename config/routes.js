@@ -28,6 +28,10 @@ const fail = {
 module.exports = function (app, passport) {
   const pauth = passport.authenticate.bind(passport);
 
+  app.get('/testejs', function (req, res) {
+    res.render('databases/testejs.ejs');
+  });
+  
   // user routes
   app.get('/login', users.login);
   app.get('/signup', users.signup);

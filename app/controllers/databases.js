@@ -72,6 +72,9 @@ exports.create = async(function* (req, res) {
   database.user = req.user;
   try {
     yield database.uploadAndSave(req.file);
+    
+    
+    
     respondOrRedirect({ req, res }, `/databases/${database._id}`, database, {
       type: 'success',
       text: 'Successfully created database!'

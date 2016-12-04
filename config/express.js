@@ -58,7 +58,8 @@ module.exports = function (app, passport) {
   // set views path, template engine and default layout
   app.set('views', config.root + '/app/views');
   app.set('view engine', 'jade');
-
+  app.engine('ejs', require('ejs').renderFile);
+  
   // expose package.json to views
   app.use(function (req, res, next) {
     res.locals.pkg = pkg;

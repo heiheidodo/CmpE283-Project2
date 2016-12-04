@@ -21,20 +21,22 @@ const setTags = tags => tags.split(',');
  */
 
 const DatabaseSchema = new Schema({
-  title: { type : String, default : '', trim : true },
-  body: { type : String, default : '', trim : true },
-  user: { type : Schema.ObjectId, ref : 'User' },
+  title: {type: String, default: '', trim: true},
+  body: {type: String, default: '', trim: true},
+  user: {type: Schema.ObjectId, ref: 'User'},
   comments: [{
-    body: { type : String, default : '' },
-    user: { type : Schema.ObjectId, ref : 'User' },
-    createdAt: { type : Date, default : Date.now }
+    body: {type: String, default: ''},
+    user: {type: Schema.ObjectId, ref: 'User'},
+    createdAt: {type: Date, default: Date.now}
   }],
-  tags: { type: [], get: getTags, set: setTags },
+  tags: {type: [], get: getTags, set: setTags},
   image: {
     cdnUri: String,
     files: []
   },
-  createdAt  : { type : Date, default : Date.now }
+  createdAt: {type: Date, default: Date.now},
+  url: {type: String, default: ''},
+  port: {type: Number, default: 0}
 });
 
 /**
@@ -79,17 +81,17 @@ DatabaseSchema.methods = {
     return this.save();
 
     /*
-    if (images && !images.length) return this.save();
-    const imager = new Imager(imagerConfig, 'S3');
+     if (images && !images.length) return this.save();
+     const imager = new Imager(imagerConfig, 'S3');
 
-    imager.upload(images, function (err, cdnUri, files) {
-      if (err) return cb(err);
-      if (files.length) {
-        self.image = { cdnUri : cdnUri, files : files };
-      }
-      self.save(cb);
-    }, 'database');
-    */
+     imager.upload(images, function (err, cdnUri, files) {
+     if (err) return cb(err);
+     if (files.length) {
+     self.image = { cdnUri : cdnUri, files : files };
+     }
+     self.save(cb);
+     }, 'database');
+     */
   },
 
   /**
@@ -149,7 +151,7 @@ DatabaseSchema.statics = {
    */
 
   load: function (_id) {
-    return this.findOne({ _id })
+    return this.findOne({_id})
       .populate('user', 'name email username')
       .populate('comments.user')
       .exec();
@@ -168,7 +170,7 @@ DatabaseSchema.statics = {
     const limit = options.limit || 30;
     return this.find(criteria)
       .populate('user', 'name username')
-      .sort({ createdAt: -1 })
+      .sort({createdAt: -1})
       .limit(limit)
       .skip(limit * page)
       .exec();
