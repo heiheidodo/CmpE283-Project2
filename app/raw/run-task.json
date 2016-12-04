@@ -1,0 +1,29 @@
+{
+  "taskDefinition": {
+    "taskDefinitionArn": "arn:aws:ecs:us-west-2:877031233507:task-definition/mongo-task:26",
+    "containerDefinitions": [
+      {
+        "name": "mongo-container",
+        "image": "mongo:latest",
+        "cpu": 0,
+        "memory": 128,
+        "portMappings": [
+          {
+            "containerPort": 27017,
+            "hostPort": 501,
+            "protocol": "tcp"
+          }
+        ],
+        "essential": true,
+        "environment": [],
+        "mountPoints": [],
+        "volumesFrom": []
+      }
+    ],
+    "family": "mongo-task",
+    "networkMode": "bridge",
+    "revision": 26,
+    "volumes": [],
+    "status": "ACTIVE"
+  }
+}

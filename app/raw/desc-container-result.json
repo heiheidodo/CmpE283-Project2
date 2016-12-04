@@ -1,0 +1,140 @@
+{
+  "containerInstances": [
+    {
+      "containerInstanceArn": "arn:aws:ecs:us-west-2:877031233507:container-instance/7170b579-3ded-4b34-8c98-1264e91ae1a7",
+      "ec2InstanceId": "i-4e841bdb",
+      "version": 86,
+      "versionInfo": {
+        "agentVersion": "1.13.1",
+        "agentHash": "efe53c6",
+        "dockerVersion": "DockerVersion: 1.11.2"
+      },
+      "remainingResources": [
+        {
+          "name": "CPU",
+          "type": "INTEGER",
+          "doubleValue": 0,
+          "longValue": 0,
+          "integerValue": 2048
+        },
+        {
+          "name": "MEMORY",
+          "type": "INTEGER",
+          "doubleValue": 0,
+          "longValue": 0,
+          "integerValue": 7858
+        },
+        {
+          "name": "PORTS",
+          "type": "STRINGSET",
+          "doubleValue": 0,
+          "longValue": 0,
+          "integerValue": 0,
+          "stringSetValue": [
+            "22",
+            "501",
+            "2376",
+            "2375",
+            "51678",
+            "51679"
+          ]
+        },
+        {
+          "name": "PORTS_UDP",
+          "type": "STRINGSET",
+          "doubleValue": 0,
+          "longValue": 0,
+          "integerValue": 0,
+          "stringSetValue": []
+        }
+      ],
+      "registeredResources": [
+        {
+          "name": "CPU",
+          "type": "INTEGER",
+          "doubleValue": 0,
+          "longValue": 0,
+          "integerValue": 2048
+        },
+        {
+          "name": "MEMORY",
+          "type": "INTEGER",
+          "doubleValue": 0,
+          "longValue": 0,
+          "integerValue": 7986
+        },
+        {
+          "name": "PORTS",
+          "type": "STRINGSET",
+          "doubleValue": 0,
+          "longValue": 0,
+          "integerValue": 0,
+          "stringSetValue": [
+            "22",
+            "2376",
+            "2375",
+            "51678",
+            "51679"
+          ]
+        },
+        {
+          "name": "PORTS_UDP",
+          "type": "STRINGSET",
+          "doubleValue": 0,
+          "longValue": 0,
+          "integerValue": 0,
+          "stringSetValue": []
+        }
+      ],
+      "status": "ACTIVE",
+      "agentConnected": true,
+      "runningTasksCount": 0,
+      "pendingTasksCount": 1,
+      "attributes": [
+        {
+          "name": "com.amazonaws.ecs.capability.logging-driver.syslog"
+        },
+        {
+          "name": "com.amazonaws.ecs.capability.task-iam-role-network-host"
+        },
+        {
+          "name": "com.amazonaws.ecs.capability.logging-driver.awslogs"
+        },
+        {
+          "name": "com.amazonaws.ecs.capability.logging-driver.json-file"
+        },
+        {
+          "name": "com.amazonaws.ecs.capability.docker-remote-api.1.17"
+        },
+        {
+          "name": "com.amazonaws.ecs.capability.privileged-container"
+        },
+        {
+          "name": "com.amazonaws.ecs.capability.docker-remote-api.1.18"
+        },
+        {
+          "name": "com.amazonaws.ecs.capability.docker-remote-api.1.19"
+        },
+        {
+          "name": "com.amazonaws.ecs.capability.ecr-auth"
+        },
+        {
+          "name": "com.amazonaws.ecs.capability.docker-remote-api.1.20"
+        },
+        {
+          "name": "com.amazonaws.ecs.capability.docker-remote-api.1.21"
+        },
+        {
+          "name": "com.amazonaws.ecs.capability.docker-remote-api.1.22"
+        },
+        {
+          "name": "com.amazonaws.ecs.capability.docker-remote-api.1.23"
+        },
+        {
+          "name": "com.amazonaws.ecs.capability.task-iam-role"
+        }
+      ]
+    }
+  ],
+  "failures": []
+}

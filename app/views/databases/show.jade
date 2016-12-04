@@ -7,6 +7,8 @@ block content
   .row
     .col-md-8
       p=database.body
+      p Host #{database.dns}
+      p Port #{database.port}
       .meta
         - if (database.user)
           - var name = database.user.name ? database.user.name : database.user.username

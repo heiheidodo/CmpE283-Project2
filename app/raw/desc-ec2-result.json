@@ -1,0 +1,150 @@
+{
+  "Reservations": [
+    {
+      "ReservationId": "r-162dd2d1",
+      "OwnerId": "877031233507",
+      "RequesterId": "226008221399",
+      "Groups": [],
+      "Instances": [
+        {
+          "InstanceId": "i-4e841bdb",
+          "ImageId": "ami-7abc111a",
+          "State": {
+            "Code": 16,
+            "Name": "running"
+          },
+          "PrivateDnsName": "ip-10-0-1-66.us-west-2.compute.internal",
+          "PublicDnsName": "ec2-35-164-227-47.us-west-2.compute.amazonaws.com",
+          "StateTransitionReason": "",
+          "KeyName": "id_rsa",
+          "AmiLaunchIndex": 0,
+          "ProductCodes": [],
+          "InstanceType": "m4.large",
+          "LaunchTime": "2016-12-04T09:46:50.000Z",
+          "Placement": {
+            "AvailabilityZone": "us-west-2a",
+            "GroupName": "",
+            "Tenancy": "default"
+          },
+          "Monitoring": {
+            "State": "enabled"
+          },
+          "SubnetId": "subnet-3145b256",
+          "VpcId": "vpc-e4ef3b83",
+          "PrivateIpAddress": "10.0.1.66",
+          "PublicIpAddress": "35.164.227.47",
+          "Architecture": "x86_64",
+          "RootDeviceType": "ebs",
+          "RootDeviceName": "/dev/xvda",
+          "BlockDeviceMappings": [
+            {
+              "DeviceName": "/dev/xvda",
+              "Ebs": {
+                "VolumeId": "vol-cddceb45",
+                "Status": "attached",
+                "AttachTime": "2016-12-04T09:46:51.000Z",
+                "DeleteOnTermination": true
+              }
+            },
+            {
+              "DeviceName": "/dev/xvdcz",
+              "Ebs": {
+                "VolumeId": "vol-cedceb46",
+                "Status": "attached",
+                "AttachTime": "2016-12-04T09:46:51.000Z",
+                "DeleteOnTermination": true
+              }
+            }
+          ],
+          "VirtualizationType": "hvm",
+          "ClientToken": "875c2f6a-703e-4826-9d13-31356cafae56_subnet-3145b256_1",
+          "Tags": [
+            {
+              "Key": "aws:autoscaling:groupName",
+              "Value": "EC2ContainerService-mongo-cluster-EcsInstanceAsg-EKCWPXT6ZEJX"
+            },
+            {
+              "Key": "Description",
+              "Value": "This instance is the part of the Auto Scaling group which was created through ECS Console\n"
+            },
+            {
+              "Key": "Name",
+              "Value": "ECS Instance - EC2ContainerService-mongo-cluster"
+            },
+            {
+              "Key": "aws:cloudformation:logical-id",
+              "Value": "EcsInstanceAsg"
+            },
+            {
+              "Key": "aws:cloudformation:stack-id",
+              "Value": "arn:aws:cloudformation:us-west-2:877031233507:stack/EC2ContainerService-mongo-cluster/72e3a330-ba06-11e6-9bf5-50a68a0e32ba"
+            },
+            {
+              "Key": "aws:cloudformation:stack-name",
+              "Value": "EC2ContainerService-mongo-cluster"
+            }
+          ],
+          "SecurityGroups": [
+            {
+              "GroupName": "EC2ContainerService-mongo-cluster-EcsSecurityGroup-8JNKVDO14RUI",
+              "GroupId": "sg-dba299a2"
+            }
+          ],
+          "SourceDestCheck": true,
+          "Hypervisor": "xen",
+          "NetworkInterfaces": [
+            {
+              "NetworkInterfaceId": "eni-fb70b68a",
+              "SubnetId": "subnet-3145b256",
+              "VpcId": "vpc-e4ef3b83",
+              "Description": "",
+              "OwnerId": "877031233507",
+              "Status": "in-use",
+              "MacAddress": "02:8c:45:bb:d2:a5",
+              "PrivateIpAddress": "10.0.1.66",
+              "PrivateDnsName": "ip-10-0-1-66.us-west-2.compute.internal",
+              "SourceDestCheck": true,
+              "Groups": [
+                {
+                  "GroupName": "EC2ContainerService-mongo-cluster-EcsSecurityGroup-8JNKVDO14RUI",
+                  "GroupId": "sg-dba299a2"
+                }
+              ],
+              "Attachment": {
+                "AttachmentId": "eni-attach-758c0dfe",
+                "DeviceIndex": 0,
+                "Status": "attached",
+                "AttachTime": "2016-12-04T09:46:50.000Z",
+                "DeleteOnTermination": true
+              },
+              "Association": {
+                "PublicIp": "35.164.227.47",
+                "PublicDnsName": "ec2-35-164-227-47.us-west-2.compute.amazonaws.com",
+                "IpOwnerId": "amazon"
+              },
+              "PrivateIpAddresses": [
+                {
+                  "PrivateIpAddress": "10.0.1.66",
+                  "PrivateDnsName": "ip-10-0-1-66.us-west-2.compute.internal",
+                  "Primary": true,
+                  "Association": {
+                    "PublicIp": "35.164.227.47",
+                    "PublicDnsName": "ec2-35-164-227-47.us-west-2.compute.amazonaws.com",
+                    "IpOwnerId": "amazon"
+                  }
+                }
+              ],
+              "Ipv6Addresses": []
+            }
+          ],
+          "IamInstanceProfile": {
+            "Arn": "arn:aws:iam::877031233507:instance-profile/ecsInstanceRole",
+            "Id": "AIPAIVJ2SMAVTBW3AUHBK"
+          },
+          "EbsOptimized": false,
+          "EnaSupport": true
+        }
+      ]
+    }
+  ]
+} 

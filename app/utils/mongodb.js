@@ -7,7 +7,7 @@ const log = require('../utils/log');
 const util = Promise.promisifyAll(require('../utils/util'));
 const _ = require('underscore');
 const DEFAULT_COLLECTION = 'app_default';
-const DEFAULT_DB_URL = 'mongodb://localhost:27017/node-app';
+const DEFAULT_DB_URL = 'mongodb://localhost/noobjs_dev';
 
 function Mongo() {
   var db;
@@ -16,7 +16,7 @@ function Mongo() {
     if (db) {
       return Promise.bind({});
     }
-    return MongoClient.connectAsync(process.env.MONGO_URL | DEFAULT_DB_URL).then(function (database) {
+    return MongoClient.connectAsync(process.env.MONGO_URL || DEFAULT_DB_URL).then(function (database) {
       db = database;
       return test();
     });
@@ -318,5 +318,5 @@ function Mongo() {
 }
 
 var mongo = new Mongo();
-
+mongo.log = false;
 module.exports = mongo;

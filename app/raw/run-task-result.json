@@ -1,0 +1,30 @@
+{
+  "tasks": [
+    {
+      "taskArn": "arn:aws:ecs:us-west-2:877031233507:task/6368018f-519c-43fa-a9fb-adb0b2fcc997",
+      "clusterArn": "arn:aws:ecs:us-west-2:877031233507:cluster/mongo-cluster",
+      "taskDefinitionArn": "arn:aws:ecs:us-west-2:877031233507:task-definition/mongo-task:31",
+      "containerInstanceArn": "arn:aws:ecs:us-west-2:877031233507:container-instance/7170b579-3ded-4b34-8c98-1264e91ae1a7",
+      "overrides": {
+        "containerOverrides": [
+          {
+            "name": "mongo-container"
+          }
+        ]
+      },
+      "lastStatus": "PENDING",
+      "desiredStatus": "RUNNING",
+      "containers": [
+        {
+          "containerArn": "arn:aws:ecs:us-west-2:877031233507:container/bfa4ecfb-222c-49f8-a27f-a83729398b3c",
+          "taskArn": "arn:aws:ecs:us-west-2:877031233507:task/6368018f-519c-43fa-a9fb-adb0b2fcc997",
+          "name": "mongo-container",
+          "lastStatus": "PENDING"
+        }
+      ],
+      "version": 1,
+      "createdAt": "2016-12-04T20:05:57.080Z"
+    }
+  ],
+  "failures": []
+}
