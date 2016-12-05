@@ -17,7 +17,7 @@ block content
           p Author :&nbsp;
             a(href="/users/"+database.user._id)= name
 
-        - if (database.tags)
+        //- if (database.tags)
           p Tags &nbsp;
             - each tag in database.tags.split(',')
               i.muted.fa.fa-tag &nbsp;
