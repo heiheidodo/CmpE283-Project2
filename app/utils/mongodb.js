@@ -28,11 +28,13 @@ function Mongo() {
     });
   };
 
-  this.collection = function (name) {
+  function getCollection() {
     return init().then(function () {
       return db.collection(name);
     });
-  };
+  }
+
+  this.collection = getCollection;
 
   function objectId(id) {
     if (id instanceof mongodb.ObjectID) {
@@ -61,7 +63,6 @@ function Mongo() {
       return put(object, collection);
     });
   };
-
   function put(object, collection) {
     if (typeof collection === 'undefined') {
       collection = DEFAULT_COLLECTION;
@@ -128,15 +129,6 @@ function Mongo() {
   }
 
   this.get = function (key, collection, refs) {
-    // if (cb) {
-    //     return init().then(function () {
-    //         return get(key, collection);
-    //     }).then(function (result) {
-    //         cb(null, result);
-    //     }, function (err) {
-    //         cb(err, undefined);
-    //     })
-    // }
     return init().then(function () {
       if (refs) {
         return getDetailed(key, collection, refs);
@@ -145,16 +137,7 @@ function Mongo() {
     })
   };
 
-  this.remove = function (key, collection, cb) {
-    // if (cb) {
-    //     return init().then(function () {
-    //         return remove(key, collection);
-    //     }).then(function (result) {
-    //         cb(null, result);
-    //     }, function (err) {
-    //         cb(err, undefined);
-    //     })
-    // }
+  this.remove = function (key, collection) {
     return init().then(function () {
       return remove(key, collection);
     })
@@ -262,6 +245,25 @@ function Mongo() {
 
   this.toFilter = toFilter;
 
+  function getPageNum(key, collection) {
+    return get(key, collection).then(function (rows) {
+      return rows.length;
+    });
+  }
+
+  this.getPageNum = getPageNum;
+
+  function getPage(key, collection, pageSize, pageNum, sort) {
+    var skip = pageSize * (pageNum - 1);
+    sort = sort || {};
+
+    return init().then(function () {
+      return db.collection(collection).find(key).sort(sort)
+        .skip(skip).limit(pageSize).toArrayAsync();
+    });
+  }
+
+  this.getPage = getPage;
 
   function test() {
     var obj = {opr: 'insert'};
@@ -295,7 +297,7 @@ function Mongo() {
       return mongo.put({opr: '1'}, TEST);
     }).then(function (result) {
       ids.push(result._id);
-      return mongo.put({opr: '2'}, TEST)
+      return mongo.put({opr: '2'}, TEST);
     }).then(function (result) {
       ids.push(result._id);
       return mongo.get(ids, TEST);
@@ -303,6 +305,10 @@ function Mongo() {
       log.v('objects = ', objects);
       assert(objects[ids[0]]['opr'] == 1);
       assert(objects[ids[1]]['opr'] == 2);
+      return mongo.getPage({}, TEST, 1, 2);
+    }).then(function (item) {
+      log.i(item);
+      assert(item[0].opr == 1);
       return mongo.put({testName: 'test inflate'}, TEST);
     }).then(function (user) {
       return mongo.put({name: 'product', testID: user._id}, TEST);
@@ -318,5 +324,4 @@ function Mongo() {
 }
 
 var mongo = new Mongo();
-mongo.log = false;
 module.exports = mongo;
