@@ -9,7 +9,7 @@ const MIN_PORT = 500;
 AWS.config.update(({region: 'us-west-2'}));
 const ecs = new AWS.ECS();
 const ec2 = new AWS.EC2();
-const CLUSTER = 'mongo-cluster';
+const CLUSTER = 'default';
 
 const readFile = Promise.promisify(require("fs").readFile);
 let TEMPLATE = undefined;
@@ -115,6 +115,7 @@ exports.create = function (database) {
     if (result.tasks.length == 0) {
       throw 'failed to create instance, ' + failures[0].reason;
     }
+    database.taskArn = result.tasks[0].taskArn;
     database.containerID = getContainerId(result.tasks[0].containerInstanceArn);
     var params = {
       cluster: CLUSTER,
@@ -161,15 +162,15 @@ exports.create = function (database) {
 exports.delete = function (database) {
   return new Promise(function (resolve, reject) {
     var params = {
+      task: database.taskArn,
       cluster: CLUSTER,
-      containerInstance: database.containerID,
-      force: true
+      reason: 'stop by user'
     };
-    ecs.deregisterContainerInstance(params, function (err, data) {
-      if (err) {
+    ecs.stopTask(params, function(err, data) {
+      if (err){
         return reject(err);
       }
-      return resolve(data);
+      resolve(data);
     });
   }).then(function (result) {
     log.i(result);

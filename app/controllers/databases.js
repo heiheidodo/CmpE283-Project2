@@ -140,15 +140,17 @@ exports.show = function (req, res) {
  */
 
 exports.destroy = function (req, res) {
+  log.req(req);
   containers.delete(req.database).then(function () {
     respondOrRedirect({req, res}, '/databases', {}, {
       type: 'info',
       text: 'Deleted successfully'
     });
   }).catch(function (err) {
+    log.e(err);
     respondOrRedirect({req, res}, '/databases', {}, {
       type: 'error',
-      text: 'Deleted failed'
+      text: 'Delete failed'
     });
   });
 };
