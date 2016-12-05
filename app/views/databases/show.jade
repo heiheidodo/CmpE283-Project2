@@ -30,7 +30,7 @@ block content
       - if (!database.isNew && database.image && database.image.files && database.image.files.length)
         img(src=database.image.cdnUri + '/mini_' + database.image.files[0])
 
-  form(action="/databases/"+database.id, method="post", onsubmit="return confirm('Are you sure?')")
+  form(action="/databases/"+database._id, method="post", onsubmit="return confirm('Are you sure?')")
     input(type='hidden', name='_csrf', value="#{csrf_token}")
     a.btn.btn-default(href='/databases/'+database._id+'/edit', title="edit") Edit
     | &nbsp;

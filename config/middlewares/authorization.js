@@ -30,7 +30,7 @@ exports.user = {
 
 exports.database = {
   hasAuthorization: function (req, res, next) {
-    if (req.database.user.id != req.user.id) {
+    if (req.database.user._id != req.user.id) {
       req.flash('info', 'You are not authorized');
       return res.redirect('/databases/' + req.database.id);
     }

@@ -112,7 +112,7 @@ exports.create = function (database) {
 
     // run result
     log.i('runResult: ', result);
-    if (result.tasks.length == 0){
+    if (result.tasks.length == 0) {
       throw 'failed to create instance, ' + failures[0].reason;
     }
     database.containerID = getContainerId(result.tasks[0].containerInstanceArn);
@@ -138,6 +138,7 @@ exports.create = function (database) {
     // get ec2 desc
     log.i('ec2: ', ec2Result);
     database.dns = ec2Result.Reservations[0].Instances[0].PublicDnsName;
+    database.createdAt = new Date();
     log.i('database: ');
     log.i(database);
     return mongo.put(database, constants.DATABASE);
@@ -155,6 +156,25 @@ exports.create = function (database) {
     }
     return new Promise.reject(err);
   });
+};
+
+exports.delete = function (database) {
+  return new Promise(function (resolve, reject) {
+    var params = {
+      cluster: CLUSTER,
+      containerInstance: database.containerID,
+      force: true
+    };
+    ecs.deregisterContainerInstance(params, function (err, data) {
+      if (err) {
+        return reject(err);
+      }
+      return resolve(data);
+    });
+  }).then(function (result) {
+    log.i(result);
+    return mongo.remove(database._id, constants.DATABASE);
+  })
 };
 
 function getContainerId(containerInstanceArn) {

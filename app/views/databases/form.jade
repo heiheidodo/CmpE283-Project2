@@ -5,7 +5,7 @@ block main
 
 block content
   - var action = '/databases'
-  - action += database.isNew? '' : '/' + database.id
+  - action += (!database || !database.containerID)? '' : '/' + database._id
 
   .row
     .col-md-8
@@ -13,7 +13,7 @@ block content
 
         input(type="hidden", name="_csrf", value="#{csrf_token}")
 
-        - if (!database.isNew)
+        - if (database && database.containerID)
           input(type="hidden", name="_method", value="PUT")
 
         .form-group

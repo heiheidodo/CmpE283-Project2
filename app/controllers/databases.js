@@ -13,20 +13,22 @@ const assign = Object.assign;
 const containers = require('./containers');
 const log = require('../utils/log');
 const util = require('../utils/util');
+const mongo = require('../utils/mongodb');
+const constants = require('../values/constants');
 
 /**
  * Load
  */
 
-exports.load = async(function*(req, res, next, id) {
-  try {
-    req.database = yield Database.load(id);
+exports.load = function (req, res, next, id) {
+  mongo.get(id, constants.DATABASE).spread(function (database) {
+    req.database = database;
     if (!req.database) return next(new Error('Database not found'));
-  } catch (err) {
+    next();
+  }).catch(function (err) {
     return next(err);
-  }
-  next();
-});
+  });
+};
 
 /**
  * List
@@ -71,14 +73,14 @@ exports.new = function (req, res) {
  */
 
 exports.create = function (req, res) {
-  var db = {};
-  db.title = req.body.title;
-  db.body = req.body.body;
-  db.uid = req.user._id;
-  db.user = req.user.toObject();
-  log.i(db);
+  var database = {};
+  database.title = req.body.title;
+  database.body = req.body.body;
+  database.uid = req.user._id;
+  database.user = req.user.toObject();
+  log.i(database);
 
-  containers.create(db).then(function (database) {
+  containers.create(database).then(function (database) {
     respondOrRedirect({req, res}, `/databases/${database._id}`, database, {
       type: 'success',
       text: 'Successfully created database!'
@@ -108,20 +110,19 @@ exports.edit = function (req, res) {
  * Update database
  */
 
-exports.update = async(function*(req, res) {
+exports.update = function (req, res) {
   const database = req.database;
   assign(database, only(req.body, 'title body tags'));
-  try {
-    yield database.uploadAndSave(req.file);
-    respondOrRedirect({res}, `/databases/${database._id}`, database);
-  } catch (err) {
+  mongo.put(database, constants.DATABASE).then(function (db) {
+    respondOrRedirect({res}, `/databases/${database._id}`, db);
+  }).catch(function (err) {
     respond(res, 'databases/edit', {
       title: 'Edit ' + database.title,
       errors: [err.toString()],
       database
     }, 422);
-  }
-});
+  });
+};
 
 /**
  * Show
@@ -138,10 +139,16 @@ exports.show = function (req, res) {
  * Delete an database
  */
 
-exports.destroy = async(function*(req, res) {
-  yield req.database.remove();
-  respondOrRedirect({req, res}, '/databases', {}, {
-    type: 'info',
-    text: 'Deleted successfully'
+exports.destroy = function (req, res) {
+  containers.delete(req.database).then(function () {
+    respondOrRedirect({req, res}, '/databases', {}, {
+      type: 'info',
+      text: 'Deleted successfully'
+    });
+  }).catch(function (err) {
+    respondOrRedirect({req, res}, '/databases', {}, {
+      type: 'error',
+      text: 'Deleted failed'
+    });
   });
-});
+};
