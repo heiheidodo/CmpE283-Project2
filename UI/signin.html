@@ -1,0 +1,58 @@
+<html>
+  <head>
+    <title>CmpE283 Project 2</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>    
+    <link href='/stylesheets/navbar-static-top.css' rel="stylesheet">
+  </head>
+  <body>
+    <nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header"><a href="/home" class="navbar-brand">Home</a></div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="/about">About</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    
+    <div ng-app="myApp" ng-controller="myCtrl">
+    <form name="createForm">
+    <br>
+    <div style="width:400px; margin:0 auto;">
+    <input class="form-control" type="text" id="name" name="name" placeholder="New DB Name" ng-model="text" required>
+    <span style="color: red" ng-show="createForm.name.$error.required">Required!</span>
+    </div>
+    
+    <div style="width:400px; margin:0 auto;">
+    <input class="form-control" type="password" id="password" name="password" style="margin-top: 20px;" placeholder="******" ng-model="password" ng-minlength="6" required> 
+    <span style="color: red" ng-show="createForm.password.$error.required">Required!</span>
+    <span style="color: red" ng-show="createForm.password.$error.minlength"> Too short!</span>
+    </div>
+    
+    <br>
+    <div style="width:400px; margin:0 auto;">
+        <button ng-click="submit();" type="submit" class="btn btn-primary btn-lg btn-block">Create</button> 
+    </div>
+    </form>
+    </div>
+    
+    <script>
+    var app = angular.module('myApp',[]);
+    app.controller('myCtrl', function($scope, $http)
+    {
+       $scope.submit=function(){
+        $http.post('/signin', {data:{name: $scope.name, schema: $scope.schema, password: $scope.password}}).then(function(data){
+            console.log(data.data);
+        });
+       } 
+     });
+    </script>
+ </body>
+</html>
