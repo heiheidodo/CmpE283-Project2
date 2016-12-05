@@ -89,7 +89,7 @@
     app.controller('myCtrl', function($scope, $http)
     {
         $scope.add=function(){
-            $scope.msg = $scope.record + " added into mongodb successfully";
+            $scope.msg = "Doing " + $scope.record + " added into mongodb......";
             $http.post('/management/add', {record: $scope.record}).then(function (data) {
                 // send data
             });
@@ -97,6 +97,7 @@
         $scope.get=function(){
             $http.post('/management/get', {record: $scope.record}).then(function (data) {
                 // send data
+                window.location.reload();
             });            
             $http.get('/management/getRecord'
             ).success(function (data, status, headers, config) {
@@ -108,15 +109,16 @@
             });
         }
         $scope.update=function(){
-            $scope.msg = $scope.record + " modifieded to " + $scope.modify + " successfully";
+            $scope.msg = "Doing " + $scope.record + " modifieded to " + $scope.modify + "......";
             $http.post('/management/update', {record: {record: $scope.record, modify : $scope.modify}}).then(function (data) {
-                
+                window.location.reload();
             });
         }
         $scope.delete=function(){
-            $scope.msg = $scope.record + " deleted from mongodb successfully";
+            $scope.msg = "Doing " + $scope.record + " deleted from mongodb......";
             $http.post('/management/delete', {record: $scope.record}).then(function (data) {
                 
+                window.location.reload();
             });
         }
     });

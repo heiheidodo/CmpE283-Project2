@@ -96,9 +96,21 @@ router.post('/update', function (req, res, next) {
 	      // for each object returned perform set the property foo == block.
 	      for(var i = result.length - 1; i >= 0; i--) {
 	      	var foo = result[i]; 
-	      	foo[Object.keys(foo)[1]] = newData[Object.keys(newData)[0]];
-	        console.log(Object.keys(foo)[1] + " " + Object.keys(newData)[0]);
-	        // save the update.
+	      	for (ii = 0; ii < Object.keys(foo).length; ii++)
+	        {
+	      		for (j = 0; j < Object.keys(newData).length; j++)
+	      		{
+	      			if (Object.keys(foo)[ii] === Object.keys(newData)[j])
+	      			{
+	      				foo[Object.keys(foo)[ii]] = newData[Object.keys(newData)[j]];
+	      			}
+	      		}
+	        }
+	      	//foo[Object.keys(foo)[1]] = newData[Object.keys(newData)[0]];
+	        
+	      	console.log(Object.keys(foo)[1] + " " + Object.keys(newData)[0]);
+	        
+	      	// save the update.
 	        crud.update(db, foo, function (err, result) {
 	        	// handle any errors here.
 	        	console.log(result);
