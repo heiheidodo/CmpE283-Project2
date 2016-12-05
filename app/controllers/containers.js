@@ -14,7 +14,6 @@ const CLUSTER = 'mongo-cluster';
 const readFile = Promise.promisify(require("fs").readFile);
 let TEMPLATE = undefined;
 const HOST_PORT = '___HOST_PORT___';
-const COL_DB = 'databases';
 
 function init() {
   if (TEMPLATE) {
@@ -80,17 +79,22 @@ function describeEC2(params) {
   });
 }
 
+function getLatestDB() {
+  return mongo.collection(constants.DATABASE).then(function (collection) {
+    return collection.find({}).sort({port: -1}).limit(1).toArrayAsync();
+  });
+}
+
 exports.create = function (database) {
+  log.i('database: ');
   log.i(database);
   return init().then(function () {
-    return mongo.collection(constants.DATABASE);
-  }).then(function (collection) {
-    return collection.find({}).sort({port: -1}).limit(1).toArrayAsync();
+    return getLatestDB();
   }).spread(function (latestDB) {
     log.i(latestDB);
 
     // get port
-    database.port = latestDB ? latestDB.port || MIN_PORT + 1 : MIN_PORT;
+    database.port = latestDB ? (latestDB.port || MIN_PORT) + 1 : MIN_PORT;
     const task = TEMPLATE.replace(HOST_PORT, database.port);
 
     return registerTask(task);
@@ -108,6 +112,9 @@ exports.create = function (database) {
 
     // run result
     log.i('runResult: ', result);
+    if (result.tasks.length == 0){
+      throw 'failed to create instance, ' + failures[0].reason;
+    }
     database.containerID = getContainerId(result.tasks[0].containerInstanceArn);
     var params = {
       cluster: CLUSTER,
@@ -131,11 +138,16 @@ exports.create = function (database) {
     // get ec2 desc
     log.i('ec2: ', ec2Result);
     database.dns = ec2Result.Reservations[0].Instances[0].PublicDnsName;
-    return mongo.put(database, COL_DB);
+    log.i('database: ');
+    log.i(database);
+    return mongo.put(database, constants.DATABASE);
   }).then(function (database) {
+
+    log.i('inserted database: ');
     log.i(database);
     return database;
   }).catch(function (err) {
+
     if (err.stack) {
       log.e(err.stack);
     } else {

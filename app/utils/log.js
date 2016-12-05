@@ -1,11 +1,11 @@
-var log = require('npmlog');
+const log = require('npmlog');
 
 log.level = 'silly';
 log.enableColor();
 const HOST_CALLER_INDEX = 3;
 const ENABLE = true;
 
-function stringify(obj) {
+function stringify (obj) {
   var cache = [];
   var result = JSON.stringify(obj, function (key, value) {
     if (typeof value === 'object' && value !== null) {

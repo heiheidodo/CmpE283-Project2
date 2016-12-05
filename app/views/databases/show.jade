@@ -7,8 +7,10 @@ block content
   .row
     .col-md-8
       p=database.body
-      p Host #{database.dns}
-      p Port #{database.port}
+      .fade.in.alert.alert-info
+        p Host: #{database.dns}
+        p Port: #{database.port}
+        p Mongo Url: mongodb://#{database.dns}:#{database.port}
       .meta
         - if (database.user)
           - var name = database.user.name ? database.user.name : database.user.username

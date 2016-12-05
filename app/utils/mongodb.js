@@ -28,7 +28,7 @@ function Mongo() {
     });
   };
 
-  function getCollection() {
+  function getCollection(name) {
     return init().then(function () {
       return db.collection(name);
     });
@@ -324,4 +324,5 @@ function Mongo() {
 }
 
 var mongo = new Mongo();
+mongo.log = false;
 module.exports = mongo;

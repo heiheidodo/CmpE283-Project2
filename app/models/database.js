@@ -35,7 +35,7 @@ const DatabaseSchema = new Schema({
     files: []
   },
   createdAt: {type: Date, default: Date.now},
-  url: {type: String, default: ''},
+  dns: {type: String, default: ''},
   port: {type: Number, default: 0}
 });
 

@@ -11,6 +11,9 @@ const {respond, respondOrRedirect} = require('../utils');
 const Database = mongoose.model('Database');
 const assign = Object.assign;
 const containers = require('./containers');
+const log = require('../utils/log');
+const util = require('../utils/util');
+
 /**
  * Load
  */
@@ -67,26 +70,28 @@ exports.new = function (req, res) {
  * Upload an image
  */
 
-exports.create = async(function*(req, res) {
-  var database = new Database(only(req.body, 'title body tags'));
-  database.user = req.user;
-  try {
-    yield database.uploadAndSave(req.file);
+exports.create = function (req, res) {
+  var db = {};
+  db.title = req.body.title;
+  db.body = req.body.body;
+  db.uid = req.user._id;
+  db.user = req.user.toObject();
+  log.i(db);
 
-    containers.create(database).then(function (database) {
-      respondOrRedirect({req, res}, `/databases/${database._id}`, database, {
-        type: 'success',
-        text: 'Successfully created database!'
-      });
+  containers.create(db).then(function (database) {
+    respondOrRedirect({req, res}, `/databases/${database._id}`, database, {
+      type: 'success',
+      text: 'Successfully created database!'
     });
-  } catch (err) {
+  }).catch(function (err) {
     respond(res, 'databases/new', {
       title: database.title || 'New Database',
       errors: [err.toString()],
       database
     }, 422);
-  }
-});
+  });
+
+};
 
 /**
  * Edit an database
