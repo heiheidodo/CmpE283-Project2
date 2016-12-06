@@ -9,7 +9,7 @@ const databases = require('../app/controllers/databases');
 const comments = require('../app/controllers/comments');
 const tags = require('../app/controllers/tags');
 const auth = require('./middlewares/authorization');
-const webui = require('../app/controllers/webui');
+// const webui = require('../app/controllers/webui');
 const mongo_express = require('mongo-express/lib/middleware');
 
 /**
@@ -85,7 +85,7 @@ module.exports = function (app, passport) {
   app.put('/databases/:id', databaseAuth, databases.update);
   app.delete('/databases/:id', databaseAuth, databases.destroy);
   // app.use('/databases/:id/ui', webui.setConfig);
-  app.use('/databases/:id/webui', webui.setConfig, webui.ui);
+  app.use('/databases/:id/webui', mongo_express(require('../app/values/mongo-express-config')));
   // app.use('/databases/:id/webui', webui.ui)
   
   // home route

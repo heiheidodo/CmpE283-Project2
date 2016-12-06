@@ -9,11 +9,13 @@ const MIN_PORT = 500;
 AWS.config.update(({region: 'us-west-2'}));
 const ecs = new AWS.ECS();
 const ec2 = new AWS.EC2();
-const CLUSTER = 'default';
+const CLUSTER = 'mongo-cluster';
 
 const readFile = Promise.promisify(require("fs").readFile);
 let TEMPLATE = undefined;
 const HOST_PORT = '___HOST_PORT___';
+const ADMIN = '___ADMIN_USER___';
+const ADMIN_PSW = '___ADMIN_PWD___';
 
 function init() {
   if (TEMPLATE) {
@@ -95,7 +97,11 @@ exports.create = function (database) {
 
     // get port
     database.port = latestDB ? (latestDB.port || MIN_PORT) + 1 : MIN_PORT;
-    const task = TEMPLATE.replace(HOST_PORT, database.port);
+    database.admin = require("randomstring").generate(10);
+    database.password = require("randomstring").generate(20);
+    let task = TEMPLATE.replace(HOST_PORT, database.port);
+    task = task.replace(ADMIN, database.admin);
+    task = task.replace(ADMIN_PSW, database.password);
 
     return registerTask(task);
   }).then(function (task) {
