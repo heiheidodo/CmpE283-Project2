@@ -44,19 +44,24 @@ let connect = function (config) {
 
   // update the collections list
   let updateCollections = function (db, dbName, callback) {
-    db.listCollections().toArray(function (err, result) {
-      let names = [];
+    try {
+      db.listCollections().toArray(function (err, result) {
+        let names = [];
 
-      for (let r in result) {
-        names.push(result[r].name);
-      }
+        for (let r in result) {
+          names.push(result[r].name);
+        }
 
-      collections[dbName] = names.sort();
+        collections[dbName] = names.sort();
 
-      if (callback) {
-        callback(err);
-      }
-    });
+        if (callback) {
+          callback(err);
+        }
+      });
+    }catch (err){
+      
+    }
+    
   };
 
   // update database list

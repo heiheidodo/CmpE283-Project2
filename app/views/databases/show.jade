@@ -14,7 +14,7 @@ block content
       .meta
         - if (database.user)
           - var name = database.user.name ? database.user.name : database.user.username
-          p Author :&nbsp;
+          p Created by :&nbsp;
             a(href="/users/"+database.user._id)= name
 
         //- if (database.tags)

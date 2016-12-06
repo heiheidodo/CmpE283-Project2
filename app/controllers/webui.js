@@ -4,26 +4,6 @@ const router = require('mongo-express/lib/router');
 const util = require('../utils/util');
 const log = require('../utils/log');
 const mongo_express_config = require('../values/mongo-express-config');
-var app = require('../../server');
-const Promise = require('bluebird');
-const writeFile = Promise.promisify(require('fs').writeFile);
-const unlink = Promise.promisify(require('fs').unlink);
-const exec = Promise.promisify(require('child_process').exec);
-
-
-const readFile = Promise.promisify(require("fs").readFile);
-let TEMPLATE = undefined;
-const HOST_PORT = '___HOST_PORT___';
-const targetPath = '/usr/local/lib/node_modules/mongo-express/config.js';
-
-function init() {
-  if (TEMPLATE) {
-    return Promise.bind({});
-  }
-  return readFile('app/raw/mongo-express-config-template.js', 'utf8').then(function (data) {
-    TEMPLATE = data;
-  });
-}
 
 let ui = mongo_express(mongo_express_config);
 exports.ui = ui;

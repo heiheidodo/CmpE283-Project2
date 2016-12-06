@@ -19,11 +19,10 @@ if (process.env.VCAP_SERVICES) {
 } else {
   mongo = {
     db:       'test',
-    host:     'localhost',
+    host:     'ec2-35-164-107-206.us-west-2.compute.amazonaws.com',
     password: '',
-    port:     27017,
+    port:     500,
     ssl:      false,
-    url:      'mongodb://localhost:27017/db',
     username: '',
   };
 }
