@@ -21,7 +21,7 @@ if (process.env.VCAP_SERVICES) {
     db:       'test',
     host:     'localhost',
     password: '',
-    port:     27017,
+    port:     5000,
     ssl:      false,
     username: '',
   };
