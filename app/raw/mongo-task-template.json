@@ -23,7 +23,20 @@
       "name": "mongo-container",
       "ulimits": null,
       "dockerSecurityOptions": null,
-      "environment": [],
+      "environment": [
+        {
+          "name": "ADMIN_PWD",
+          "value": "___ADMIN_PWD___"
+        },
+        {
+          "name": "ADMIN_USER",
+          "value": "___ADMIN_USER___"
+        },
+        {
+          "name": "AUTH",
+          "value": "y"
+        }
+      ],
       "links": null,
       "workingDirectory": null,
       "readonlyRootFilesystem": null,
