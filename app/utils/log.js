@@ -53,7 +53,7 @@ Object.defineProperty(global, '__line', {
 
 function addFileAndLineInfo(args) {
   var copy = [].slice.call(args);
-  copy.push('<' + __full_file + ':' + __line + '>');
+  copy.push('(' + __full_file + ':' + __line + ')');
   for (var i = 0; i < copy.length; ++i) {
     if (typeof copy[i] === typeof {}) {
       copy[i] = stringify(copy[i]);

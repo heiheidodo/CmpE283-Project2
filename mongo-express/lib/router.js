@@ -14,12 +14,28 @@ var mongodb         = require('mongodb');
 var routes          = require('./routes');
 var session         = require('express-session');
 var utils           = require('./utils');
+const log = require('../../app/utils/log');
+const Promise = require('bluebird');
 
 var router = function (config) {
+  log.i('router');
+
   // appRouter configuration
   var appRouter = express.Router();
   var mongo     = db(config);
 
+  appRouter.setDB = function (config) {
+    return new Promise(function (resolve) {
+      mongo.mainConn.close(true, function (err) {
+        if(err){
+          log.e(err);
+        }
+        mongo = db(config);
+        resolve();
+      });
+    });
+  };
+  
   if (config.useBasicAuth) {
     appRouter.use(basicAuth(config.basicAuth.username, config.basicAuth.password));
   }

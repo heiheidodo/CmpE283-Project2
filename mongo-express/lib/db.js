@@ -1,13 +1,14 @@
 'use strict';
 
-const _       = require('underscore');
-const async   = require('async');
+const _ = require('underscore');
+const async = require('async');
 const mongodb = require('mongodb');
+const log = require('../../app/utils/log');
 
 let connect = function (config) {
   // set up database stuff
-  let host = config.mongodb.server  || 'localhost';
-  let port = config.mongodb.port    || mongodb.Connection.DEFAULT_PORT;
+  let host = config.mongodb.server || 'localhost';
+  let port = config.mongodb.port || mongodb.Connection.DEFAULT_PORT;
 
   if (config.mongodb.useSSL) {
     console.error('Please update config file to use mongodb.ssl instead of mongodb.useSSL. Copying value for now.');
@@ -16,10 +17,10 @@ let connect = function (config) {
 
   let dbOptions = {
     auto_reconnect: config.mongodb.autoReconnect,
-    poolSize:       config.mongodb.poolSize,
-    ssl:            config.mongodb.ssl,
-    sslValidate:    config.mongodb.sslValidate,
-    sslCA:          config.mongodb.sslCA,
+    poolSize: config.mongodb.poolSize,
+    ssl: config.mongodb.ssl,
+    sslValidate: config.mongodb.sslValidate,
+    sslCA: config.mongodb.sslCA,
   };
 
   let db;
@@ -29,17 +30,17 @@ let connect = function (config) {
       return new mongodb.Server(host, port, dbOptions);
     });
 
-    db = new mongodb.Db('local', new mongodb.ReplSet(host), { safe: true, w: 0 });
+    db = new mongodb.Db('local', new mongodb.ReplSet(host), {safe: true, w: 0});
   } else {
-    db = new mongodb.Db('local', new mongodb.Server(host, port, dbOptions), { safe: true });
+    db = new mongodb.Db('local', new mongodb.Server(host, port, dbOptions), {safe: true});
   }
 
-  let collections     = {};
-  let connections     = {};
-  let databases       = [];
+  let collections = {};
+  let connections = {};
+  let databases = [];
 
   let adminDb = db.admin();
-  let mainConn  = db; // main db connection
+  let mainConn = db; // main db connection
 
   // update the collections list
   let updateCollections = function (db, dbName, callback) {
@@ -60,6 +61,7 @@ let connect = function (config) {
 
   // update database list
   let updateDatabases = function (admin, callback) {
+    log.i('updateDatabases')
 
     admin.listDatabases(function (err, dbs) {
       databases = [];
@@ -162,13 +164,13 @@ let connect = function (config) {
   });
 
   return {
-    adminDb:            adminDb,
-    collections:        collections,
-    connections:        connections,
-    databases:          databases,
-    mainConn:           mainConn,
-    updateCollections:  updateCollections,
-    updateDatabases:    updateDatabases,
+    adminDb: adminDb,
+    collections: collections,
+    connections: connections,
+    databases: databases,
+    mainConn: mainConn,
+    updateCollections: updateCollections,
+    updateDatabases: updateDatabases,
   };
 };
 

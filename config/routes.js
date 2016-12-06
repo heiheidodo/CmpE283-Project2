@@ -84,7 +84,8 @@ module.exports = function (app, passport) {
   app.get('/databases/:id/edit', databaseAuth, databases.edit);
   app.put('/databases/:id', databaseAuth, databases.update);
   app.delete('/databases/:id', databaseAuth, databases.destroy);
-  app.use('/databases/:id/ui', webui.setConfig);
+  // app.use('/databases/:id/ui', webui.setConfig);
+  app.use('/databases/:id/webui', webui.setConfig, webui.ui);
   // app.use('/databases/:id/webui', webui.ui)
   
   // home route

@@ -20,7 +20,8 @@ var middleware = function (config) {
   app.set('view engine', 'html');
   app.set('view options', { layout: false });
 
-  app.use('/', router(config));
+  app.rt = router(config);
+  app.use('/', app.rt);
 
   return app;
 };

@@ -1,5 +1,5 @@
 'use strict';
-const mongo_express = require('mongo-express/lib/middleware');
+const mongo_express = require('../../mongo-express/lib/middleware');
 const router = require('mongo-express/lib/router');
 const util = require('../utils/util');
 const log = require('../utils/log');
@@ -29,8 +29,6 @@ let ui = mongo_express(mongo_express_config);
 exports.ui = ui;
 exports.config = mongo_express_config;
 
-var proc;
-
 exports.setConfig = function (req, res, next) {
   let config = util.copy(mongo_express_config);
   config.mongodb.server = req.database.dns || 'localhost';
@@ -40,33 +38,7 @@ exports.setConfig = function (req, res, next) {
   log.i('setConfig');
   log.i(config);
 
-  // init().then(function () {
-  //   return unlink(targetPath)
-  // }).then(function () {
-  //   let configjs = TEMPLATE.replace('___HOST___', config.mongodb.server);
-  //   configjs = TEMPLATE.replace('___PASSWORD___', config.mongodb.password);
-  //   configjs = TEMPLATE.replace('___PORT___', config.mongodb.port);
-  //   configjs = TEMPLATE.replace('___USER___', config.mongodb.username);
-  //   return writeFile(targetPath, configjs);
-  // }).then(function () {
-  //   if (proc) {
-  //     proc.kill('SIGINT');
-  //   }
-  //   proc = require('child_process').spawn('mongo-express');
-  // }).then(function () {
-  //   const url = '/databases/' + req.database._id + '/webui';
-  //   res.redirect('localhost:8081');
-  // });
-
-  // removeRoute(app, '/')
-  // ui.use('/', router(config));
-  //
-  const url = '/dfewafe';
-  // const url = '/databases/' + req.database._id + '/webui';
-  // app.get(url, mongo_express(mongo_express_config));
-  app.get(url, function (req, res) {
-    res.send('heeejofe')
+  ui.rt.setDB(config).then(function () {
+    next();
   });
-  log.i(app.hello);
-  res.redirect(url);
 };
