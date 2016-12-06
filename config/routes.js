@@ -9,6 +9,8 @@ const databases = require('../app/controllers/databases');
 const comments = require('../app/controllers/comments');
 const tags = require('../app/controllers/tags');
 const auth = require('./middlewares/authorization');
+const webui = require('../app/controllers/webui');
+const mongo_express = require('mongo-express/lib/middleware');
 
 /**
  * Route middlewares
@@ -82,7 +84,9 @@ module.exports = function (app, passport) {
   app.get('/databases/:id/edit', databaseAuth, databases.edit);
   app.put('/databases/:id', databaseAuth, databases.update);
   app.delete('/databases/:id', databaseAuth, databases.destroy);
-
+  app.use('/databases/:id/ui', webui.setConfig);
+  // app.use('/databases/:id/webui', webui.ui)
+  
   // home route
   app.get('/', databases.index);
 

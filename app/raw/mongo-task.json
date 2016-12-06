@@ -1,48 +1,56 @@
 {
-  "attributes": null,
-  "requiresAttributes": [],
-  "taskDefinitionArn": "arn:aws:ecs:us-west-2:877031233507:task-definition/mongo-task:2",
-  "networkMode": "bridge",
-  "status": "ACTIVE",
-  "revision": 2,
-  "taskRoleArn": null,
-  "containerDefinitions": [
-    {
-      "volumesFrom": [],
-      "memory": 128,
-      "extraHosts": null,
-      "dnsServers": null,
-      "disableNetworking": null,
-      "dnsSearchDomains": null,
-      "portMappings": [
-        {
-          "hostPort": 27017,
-          "containerPort": 27017,
-          "protocol": "tcp"
-        }
-      ],
-      "hostname": null,
-      "essential": true,
-      "entryPoint": null,
-      "mountPoints": [],
-      "name": "mongo-container",
-      "ulimits": null,
-      "dockerSecurityOptions": null,
-      "environment": [],
-      "links": null,
-      "workingDirectory": null,
-      "readonlyRootFilesystem": null,
-      "image": "mongo:latest",
-      "command": null,
-      "user": null,
-      "dockerLabels": null,
-      "logConfiguration": null,
-      "cpu": 0,
-      "privileged": null,
-      "memoryReservation": null
-    }
-  ],
-  "placementConstraints": [],
-  "volumes": [],
-  "family": "mongo-task"
+  "mongodb": {
+    "server": "ec2-35-164-107-206.us-west-2.compute.amazonaws.com",
+    "port": 500,
+    "ssl": false,
+    "sslValidate": true,
+    "sslCA": [],
+    "autoReconnect": true,
+    "poolSize": 4,
+    "admin": true,
+    "auth": [
+      {
+        "database": "test",
+        "username": "",
+        "password": ""
+      }
+    ],
+    "adminUsername": "",
+    "adminPassword": "",
+    "whitelist": [],
+    "blacklist": [],
+    "username": "",
+    "password": ""
+  },
+  "site": {
+    "baseUrl": "/",
+    "cookieKeyName": "mongo-express",
+    "cookieSecret": "cookiesecret",
+    "host": "localhost",
+    "port": 8081,
+    "requestSizeLimit": "50mb",
+    "sessionSecret": "sessionsecret",
+    "sslCert": "",
+    "sslEnabled": false,
+    "sslKey": ""
+  },
+  "useBasicAuth": true,
+  "basicAuth": {
+    "username": "",
+    "password": ""
+  },
+  "options": {
+    "console": true,
+    "documentsPerPage": 10,
+    "editorTheme": "rubyblue",
+    "maxPropSize": 100000,
+    "maxRowSize": 1000000,
+    "cmdType": "eval",
+    "subprocessTimeout": 300,
+    "readOnly": false,
+    "collapsibleJSON": true,
+    "collapsibleJSONDefaultUnfold": 1,
+    "gridFSEnabled": false
+  },
+  "defaultKeyNames": {}
 }
